@@ -15,7 +15,7 @@ function App() {
   const [currentMonth, setCurrentMonth] = useState(getDaysInMonth());
   return (
     <>
-      <div className="h-screen flex flex-columns">
+      <div className="h-screen flex flex-col">
         <CalendarHeader />
         <div className="flex flex-1">
           <Sidebar />
