@@ -1,10 +1,28 @@
+import { useState } from "react";
+
 //Helpers
 import { getDaysInMonth } from "./helpers/helpers";
+
+//Components
+import CalendarHeader from "./components/CalendarHeader";
+import Month from "./components/Month";
+import Sidebar from "./components/Sidebar";
 
 console.table(getDaysInMonth());
 
 function App() {
-  return <div className="App">Hi</div>;
+  const [currentMonth, setCurrentMonth] = useState(getDaysInMonth());
+  return (
+    <>
+      <div className="h-screen flex flex-columns">
+        <CalendarHeader />
+        <div className="flex flex-1">
+          <Sidebar />
+          <Month month={currentMonth} />
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default App;
