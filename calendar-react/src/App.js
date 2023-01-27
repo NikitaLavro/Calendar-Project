@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./index.css";
 
 //Helpers
 import { getDaysInMonth } from "./helpers/helpers";
