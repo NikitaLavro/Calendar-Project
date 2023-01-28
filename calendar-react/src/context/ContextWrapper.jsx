@@ -15,19 +15,25 @@ const savedEventsReduces = (state, { type, payload }) => {
   }
 };
 
-const initialEvents = () => {
+function initEvents() {
   const storageEvents = localStorage.getItem("savedEvents");
   const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
-};
+  return parsedEvents;
+}
 
 export const ContextWrapper = ({ children }) => {
   const [monthIndex, setMonthIndex] = useState(dayjs().month());
   const [showEventModal, setShowEventModal] = useState(false);
   const [daySelected, setDaySelected] = useState(dayjs());
 
-  const [savedEvents, dispatchCallEvent] = useReducer(savedEventsReduces, []);
+  const [savedEvents, dispatchCallEvent] = useReducer(
+    savedEventsReduces,
+    [],
+    initEvents
+  );
 
   useEffect(() => {
+    console.log(savedEvents);
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
   }, [savedEvents]);
 
