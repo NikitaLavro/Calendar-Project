@@ -75,86 +75,88 @@ const EventModal = () => {
         className="h-screen w-full bg-slate-300 opacity-70 fixed"
         onClick={() => setShowEventModal(false)}
       />
-      <form
-        className="bg-white rounded-lg shadow-sm w-1/4 fixed inset-1/3 translate-x-1/4"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
-          <button>
-            <span>
-              <DragHandleIcon />
-            </span>
-          </button>
-          <button onClick={(e) => handleModalClose(e)}>
-            <span>
-              <CloseIcon />
-            </span>
-          </button>
-        </header>
-        <div className="p-3">
-          <div className="grid grid-cols-1/6 items-end gap-y-7">
-            <div className="flex">
-              <input
-                className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:blue-500"
-                type="text"
-                name="title"
-                placeholder="Add title"
-                value={title}
-                required
-                onChange={(e) => setTitle(e.target.value)}
-              />
+      <div className="fixed inset-1/3 translate-x-1/3 h-96 w-80">
+        <form
+          className="bg-white rounded-lg shadow-sm "
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
+            <button>
               <span>
-                <CalendarMonthIcon />
+                <DragHandleIcon />
               </span>
-            </div>
-
-            <div className="flex">
-              <input
-                className="pt-3 border-0 text-gray-600    pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:blue-500"
-                type="text"
-                name="description"
-                placeholder="Add a description"
-                value={description}
-                required
-                onChange={(e) => setDescription(e.target.value)}
-              />
+            </button>
+            <button onClick={(e) => handleModalClose(e)}>
               <span>
-                <DescriptionIcon />
+                <CloseIcon />
               </span>
-            </div>
+            </button>
+          </header>
+          <div className="p-3">
+            <div className="grid grid-cols-1/6 items-end gap-y-7">
+              <div className="flex">
+                <input
+                  className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:blue-500"
+                  type="text"
+                  name="title"
+                  placeholder="Add title"
+                  value={title}
+                  required
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <span>
+                  <CalendarMonthIcon />
+                </span>
+              </div>
 
-            <div className="flex">
-              <AccessTimeIcon />
-              <p className="mx-2">
-                {selectedEvent && selectedEvent.created}
-                {selectedEvent && selectedEvent.updated}
-                {!selectedEvent && daySelected.format("DD, MMMM, YYYY")}
-              </p>
+              <div className="flex">
+                <input
+                  className="pt-3 border-0 text-gray-600    pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:blue-500"
+                  type="text"
+                  name="description"
+                  placeholder="Add a description"
+                  value={description}
+                  required
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <span>
+                  <DescriptionIcon />
+                </span>
+              </div>
+
+              <div className="flex">
+                <AccessTimeIcon />
+                <p className="mx-2">
+                  {selectedEvent && selectedEvent.created}
+                  {selectedEvent && selectedEvent.updated}
+                  {!selectedEvent && daySelected.format("DD, MMMM, YYYY")}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <footer className="flex justify-end border-t p-3 mt-5">
-          {selectedEvent && (
+          <footer className="flex justify-end border-t p-3 mt-5">
+            {selectedEvent && (
+              <button
+                onClick={() => {
+                  dispatchCallEvent({ type: "delete", payload: selectedEvent });
+                  setShowEventModal(false);
+                  setSelectedEvent(null);
+                }}
+                className="mx-2 bg-red-500 hover:bg-red-600 px-6 py-2 rounded text-white"
+              >
+                {<DeleteIcon />}
+              </button>
+            )}
             <button
-              onClick={() => {
-                dispatchCallEvent({ type: "delete", payload: selectedEvent });
-                setShowEventModal(false);
-                setSelectedEvent(null);
-              }}
-              className="mx-2 bg-red-500 hover:bg-red-600 px-6 py-2 rounded text-white"
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
+              onClick={handleSubmit}
             >
-              {<DeleteIcon />}
+              Save
             </button>
-          )}
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
-            onClick={handleSubmit}
-          >
-            Save
-          </button>
-        </footer>
-      </form>
+          </footer>
+        </form>
+      </div>
     </>
   );
 };
