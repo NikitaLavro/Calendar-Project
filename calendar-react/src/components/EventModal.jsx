@@ -7,16 +7,19 @@ import DragHandleIcon from "@mui/icons-material/DragHandle";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 //dayjs
 import dayjs from "dayjs";
 
 const EventModal = () => {
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState("");
-
-  const { daySelected, setShowEventModal, dispatchCallEvent } =
+  const { daySelected, setShowEventModal, dispatchCallEvent, selectedEvent } =
     useContext(AppContext);
+
+  const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : "");
+  const [description, setDescription] = useState(
+    selectedEvent ? selectedEvent.description : ""
+  );
 
   const handleModalClose = (e) => {
     e.preventDefault();
@@ -29,9 +32,13 @@ const EventModal = () => {
       title,
       description,
       day: daySelected.valueOf(),
-      id: Date.now(),
+      id: selectedEvent ? selectedEvent.id : Date.now(),
     };
-    dispatchCallEvent({ type: "push", payload: calendarEvent });
+    if (selectedEvent) {
+      dispatchCallEvent({ type: "update", payload: calendarEvent });
+    } else {
+      dispatchCallEvent({ type: "push", payload: calendarEvent });
+    }
     setShowEventModal(false);
   };
 
@@ -89,6 +96,17 @@ const EventModal = () => {
           </div>
         </div>
         <footer className="flex justify-end border-t p-3 mt-5">
+          {selectedEvent && (
+            <button
+              onClick={() => {
+                dispatchCallEvent({ type: "delete", payload: selectedEvent });
+                setShowEventModal(false);
+              }}
+              className="mx-2 bg-red-500 hover:bg-red-600 px-6 py-2 rounded text-white"
+            >
+              {<DeleteIcon />}
+            </button>
+          )}
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"

@@ -25,6 +25,7 @@ export const ContextWrapper = ({ children }) => {
   const [monthIndex, setMonthIndex] = useState(dayjs().month());
   const [showEventModal, setShowEventModal] = useState(false);
   const [daySelected, setDaySelected] = useState(dayjs());
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [savedEvents, dispatchCallEvent] = useReducer(
     savedEventsReduces,
@@ -48,6 +49,8 @@ export const ContextWrapper = ({ children }) => {
         setDaySelected,
         dispatchCallEvent,
         savedEvents,
+        selectedEvent,
+        setSelectedEvent,
       }}
     >
       {children}

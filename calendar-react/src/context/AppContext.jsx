@@ -9,6 +9,8 @@ const AppContext = React.createContext({
   setDaySelected: (day) => {},
   dispatchCallEvent: ({ type, payload }) => {},
   savedEvents: [],
+  selectedEvent: null,
+  setSelectedEvent: () => {},
 });
 
 export default AppContext;

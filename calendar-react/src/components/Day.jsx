@@ -5,7 +5,7 @@ import AppContext from "../context/AppContext";
 const Day = ({ day, rowIndex }) => {
   const [dayEvents, setDayEvents] = useState([]);
 
-  const { setDaySelected, setShowEventModal, savedEvents } =
+  const { setDaySelected, setShowEventModal, savedEvents, setSelectedEvent } =
     useContext(AppContext);
 
   const currentDayClass = () => {
@@ -21,7 +21,6 @@ const Day = ({ day, rowIndex }) => {
     setDayEvents(events);
   }, [savedEvents, day]);
 
-  console.log(day);
   return (
     <div
       className={`border border-gray-200 flex flex-col ${currentDayClass()}`}
@@ -42,15 +41,17 @@ const Day = ({ day, rowIndex }) => {
           setDaySelected(day);
           setShowEventModal(true);
         }}
-      ></div>
-      {dayEvents.map((evt, i) => (
-        <div
-          key={i}
-          className="bg-blue-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate"
-        >
-          {evt.title}
-        </div>
-      ))}
+      >
+        {dayEvents.map((evt, i) => (
+          <div
+            onClick={() => setSelectedEvent(evt)}
+            key={i}
+            className="bg-blue-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate"
+          >
+            {evt.title}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
