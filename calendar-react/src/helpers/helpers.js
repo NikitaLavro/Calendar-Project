@@ -14,3 +14,11 @@ export const getDaysInMonth = (month = dayjs().month()) => {
   });
   return daysMatrix;
 };
+
+export const currentDate = () => {
+  return dayjs().format("DD, MMMM, YYYY");
+};
+
+export const currentTime = () => {
+  return dayjs().format("hh:mm:ss");
+};

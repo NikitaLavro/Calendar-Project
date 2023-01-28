@@ -12,6 +12,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 //dayjs
 import dayjs from "dayjs";
 
+//Helpers
+import { currentDate, currentTime } from "../helpers/helpers";
+
 const EventModal = () => {
   const {
     daySelected,
@@ -47,9 +50,7 @@ const EventModal = () => {
           type: "update",
           payload: {
             ...calendarEvent,
-            updated: `Updated on ${dayjs().format(
-              "DD, MMMM, YYYY"
-            )} at ${dayjs().format("hh:mm:ss")}`,
+            updated: `Updated on ${currentDate()} at ${currentTime()}`,
             created: false,
           },
         });
@@ -58,9 +59,7 @@ const EventModal = () => {
           type: "push",
           payload: {
             ...calendarEvent,
-            created: `Created on ${dayjs().format(
-              "DD, MMMM, YYYY"
-            )} at ${dayjs().format("hh:mm:ss")}`,
+            created: `Created on ${currentDate()} at ${currentTime()}`,
           },
         });
       }
