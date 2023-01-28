@@ -12,11 +12,11 @@ import EventModal from "./components/EventModal";
 //Context
 import AppContext from "./context/AppContext";
 
-console.table(getDaysInMonth());
+console.log(getDaysInMonth());
 
 function App() {
   const [currentMonth, setCurrentMonth] = useState(getDaysInMonth());
-  const { monthIndex } = useContext(AppContext);
+  const { monthIndex, showEventModal } = useContext(AppContext);
 
   useEffect(() => {
     setCurrentMonth(getDaysInMonth(monthIndex));
@@ -24,7 +24,7 @@ function App() {
 
   return (
     <>
-      <EventModal />
+      {showEventModal && <EventModal />}
       <div className="h-screen flex flex-col">
         <CalendarHeader />
         <div className="flex flex-1">
