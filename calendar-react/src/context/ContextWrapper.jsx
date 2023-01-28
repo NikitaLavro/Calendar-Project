@@ -41,6 +41,7 @@ export const ContextWrapper = ({ children }) => {
         daySelected,
         setDaySelected,
         dispatchCallEvent,
+        savedEvents,
       }}
     >
       {children}

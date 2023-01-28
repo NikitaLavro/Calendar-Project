@@ -1,15 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import AppContext from "../context/AppContext";
 
 const Day = ({ day, rowIndex }) => {
-  const { setDaySelected, setShowEventModal } = useContext(AppContext);
+  const [dayEvents, setDayEvents] = useState([]);
+
+  const { setDaySelected, setShowEventModal, savedEvents } =
+    useContext(AppContext);
 
   const currentDayClass = () => {
     return day.format("DD--MM--YY") === dayjs().format("DD--MM--YY")
       ? "bg-emerald-200"
       : "";
   };
+
+  useEffect(() => {
+    const events = savedEvents.filter(
+      (evt) => dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
+    );
+    setDayEvents(events);
+  }, [savedEvents, day]);
+
   return (
     <div
       className={`border border-gray-200 flex flex-col ${currentDayClass()}`}
