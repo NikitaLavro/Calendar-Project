@@ -7,6 +7,7 @@ import { getDaysInMonth } from "./helpers/helpers";
 import CalendarHeader from "./components/CalendarHeader";
 import Month from "./components/Month";
 import Sidebar from "./components/Sidebar";
+import EventModal from "./components/EventModal";
 
 //Context
 import AppContext from "./context/AppContext";
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+      <EventModal />
       <div className="h-screen flex flex-col">
         <CalendarHeader />
         <div className="flex flex-1">
