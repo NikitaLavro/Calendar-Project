@@ -70,8 +70,15 @@ const EventModal = () => {
   };
 
   return (
-    <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
-      <form className="bg-white rounded-lg shadow-sm w-1/4">
+    <>
+      <div
+        className="h-screen w-full bg-slate-300 opacity-70 fixed"
+        onClick={() => setShowEventModal(false)}
+      />
+      <form
+        className="bg-white rounded-lg shadow-sm w-1/4 fixed inset-1/3 translate-x-1/4"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <button>
             <span>
@@ -148,7 +155,7 @@ const EventModal = () => {
           </button>
         </footer>
       </form>
-    </div>
+    </>
   );
 };
 
