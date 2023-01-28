@@ -5,7 +5,11 @@ import dayjs from "dayjs";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
+//Context
 import AppContext from "../context/AppContext";
+
+//Components
+import EventButton from "./EventButton";
 
 const CalendarHeader = () => {
   const { monthIndex, setMonthIndex } = useContext(AppContext);
@@ -33,6 +37,7 @@ const CalendarHeader = () => {
           {<ChevronRightIcon />}
         </span>
       </button>
+      <EventButton />
     </header>
   );
 };

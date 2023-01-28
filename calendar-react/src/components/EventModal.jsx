@@ -13,8 +13,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 
 const EventModal = () => {
-  const { daySelected, setShowEventModal, dispatchCallEvent, selectedEvent } =
-    useContext(AppContext);
+  const {
+    daySelected,
+    setShowEventModal,
+    dispatchCallEvent,
+    selectedEvent,
+    setSelectedEvent,
+  } = useContext(AppContext);
 
   const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : "");
   const [description, setDescription] = useState(
@@ -28,18 +33,40 @@ const EventModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const calendarEvent = {
-      title,
-      description,
-      day: daySelected.valueOf(),
-      id: selectedEvent ? selectedEvent.id : Date.now(),
-    };
-    if (selectedEvent) {
-      dispatchCallEvent({ type: "update", payload: calendarEvent });
-    } else {
-      dispatchCallEvent({ type: "push", payload: calendarEvent });
+    if (title && description) {
+      const calendarEvent = {
+        title,
+        description,
+        updated: false,
+        created: false,
+        day: daySelected.valueOf(),
+        id: selectedEvent ? selectedEvent.id : Date.now(),
+      };
+      if (selectedEvent) {
+        dispatchCallEvent({
+          type: "update",
+          payload: {
+            ...calendarEvent,
+            updated: `Updated on ${dayjs().format(
+              "DD, MMMM, YYYY"
+            )} at ${dayjs().format("hh:mm:ss")}`,
+            created: false,
+          },
+        });
+      } else {
+        dispatchCallEvent({
+          type: "push",
+          payload: {
+            ...calendarEvent,
+            created: `Created on ${dayjs().format(
+              "DD, MMMM, YYYY"
+            )} at ${dayjs().format("hh:mm:ss")}`,
+          },
+        });
+      }
+      setShowEventModal(false);
+      setSelectedEvent(null);
     }
-    setShowEventModal(false);
   };
 
   return (
@@ -91,7 +118,11 @@ const EventModal = () => {
 
             <div className="flex">
               <AccessTimeIcon />
-              <p className="mx-2">{daySelected.format("MMMM, DD, YYYY")}</p>
+              <p className="mx-2">
+                {selectedEvent && selectedEvent.created}
+                {selectedEvent && selectedEvent.updated}
+                {!selectedEvent && daySelected.format("DD, MMMM, YYYY")}
+              </p>
             </div>
           </div>
         </div>
@@ -101,6 +132,7 @@ const EventModal = () => {
               onClick={() => {
                 dispatchCallEvent({ type: "delete", payload: selectedEvent });
                 setShowEventModal(false);
+                setSelectedEvent(null);
               }}
               className="mx-2 bg-red-500 hover:bg-red-600 px-6 py-2 rounded text-white"
             >
