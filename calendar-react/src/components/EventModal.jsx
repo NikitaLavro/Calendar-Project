@@ -15,10 +15,23 @@ const EventModal = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState("");
 
-  const { daySelected, setShowEventModal } = useContext(AppContext);
+  const { daySelected, setShowEventModal, dispatchCallEvent } =
+    useContext(AppContext);
 
   const handleModalClose = (e) => {
     e.preventDefault();
+    setShowEventModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const calendarEvent = {
+      title,
+      description,
+      day: daySelected.valueOf(),
+      id: Date.now(),
+    };
+    dispatchCallEvent({ type: "push", payload: calendarEvent });
     setShowEventModal(false);
   };
 
@@ -75,10 +88,11 @@ const EventModal = () => {
             </div>
           </div>
         </div>
-        <footer className="flex justify-end  border-t p-3 mt-5">
+        <footer className="flex justify-end border-t p-3 mt-5">
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
+            onClick={handleSubmit}
           >
             Save
           </button>
