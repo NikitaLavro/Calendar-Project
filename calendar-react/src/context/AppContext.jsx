@@ -5,6 +5,8 @@ const AppContext = React.createContext({
   setMonthIndex: (index) => {},
   showEventModal: false,
   setShowEventModal: () => {},
+  daySelected: null,
+  setDaySelected: (day) => {},
 });
 
 export default AppContext;

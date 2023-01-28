@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import dayjs from "dayjs";
+import AppContext from "../context/AppContext";
 
 const Day = ({ day, rowIndex }) => {
+  const { setDaySelected, setShowEventModal } = useContext(AppContext);
+
   const currentDayClass = () => {
     return day.format("DD--MM--YY") === dayjs().format("DD--MM--YY")
       ? "bg-emerald-200"
@@ -21,6 +24,15 @@ const Day = ({ day, rowIndex }) => {
           {day.format("DD")}
         </p>
       </header>
+      <div
+        className="flex-1 cursor-pointer"
+        onClick={() => {
+          setDaySelected(day);
+          setShowEventModal(true);
+        }}
+      >
+        {""}
+      </div>
     </div>
   );
 };
